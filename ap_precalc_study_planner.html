@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AP Precalculus Study Tracker – Road to May 12</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#f4f1ec; --surface:#fff; --surface2:#faf8f5; --border:#e8e2d9;
+    --text:#1a1612; --muted:#7a7168;
+    --accent:#c8553d; --accent-s:#f7e8e5;
+    --green:#3a7d44; --green-s:#e5f2e7;
+    --blue:#2d5fa6; --blue-s:#e5edf8;
+    --gold:#c49a2e; --gold-s:#faf3e0;
+    --purple:#6b4fa0; --purple-s:#f0ecf8;
+    --teal:#2a7a74; --teal-s:#e5f3f2;
+    --r:16px; --rs:8px;
+    --sh:0 2px 12px rgba(0,0,0,.07);
+    --shm:0 4px 24px rgba(0,0,0,.10);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:60px}
+
+  /* HERO */
+  .hero{background:linear-gradient(135deg,#1a1612 0%,#2d1f0e 50%,#1a2a1a 100%);color:#fff;padding:52px 24px 44px;text-align:center;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 30% 50%,rgba(200,85,61,.18) 0%,transparent 60%),radial-gradient(ellipse at 75% 30%,rgba(58,125,68,.15) 0%,transparent 55%)}
+  .eyebrow{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:12px}
+  .hero h1{font-family:'Playfair Display',serif;font-size:clamp(24px,5vw,42px);font-weight:900;line-height:1.15;margin-bottom:10px}
+  .hero h1 span{color:#f4a58a}
+  .hero-sub{font-size:14px;color:rgba(255,255,255,.55);margin-bottom:32px}
+
+  .cd-row{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:32px}
+  .cd-chip{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:10px 20px;text-align:center}
+  .cd-num{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:#f4a58a;display:block;line-height:1}
+  .cd-lbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-top:4px;display:block}
+
+  .gp-wrap{max-width:560px;margin:0 auto}
+  .gp-meta{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+  .gp-label{font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.6)}
+  .gp-pct{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#fff}
+  .gp-track{background:rgba(255,255,255,.12);border-radius:100px;height:10px;overflow:hidden}
+  .gp-fill{height:100%;border-radius:100px;background:linear-gradient(90deg,#f4a58a,#c8553d);transition:width .6s cubic-bezier(.4,0,.2,1)}
+
+  /* CONTAINER */
+  .wrap{max-width:920px;margin:0 auto;padding:32px 16px 0}
+  .toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px}
+  .t-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700}
+  .btn{display:inline-flex;align-items:center;gap:6px;border:none;border-radius:var(--rs);padding:9px 18px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .18s}
+  .btn-d{background:var(--accent-s);color:var(--accent)}.btn-d:hover{background:#f0d0cb}
+  .btn-g{background:var(--surface);color:var(--muted);border:1px solid var(--border)}.btn-g:hover{background:var(--bg)}
+  .t-acts{display:flex;gap:8px;flex-wrap:wrap}
+
+  .legend{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
+  .leg-i{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:var(--muted)}
+  .leg-d{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+
+  /* WEEK CARD */
+  .wk{background:var(--surface);border-radius:var(--r);box-shadow:var(--sh);margin-bottom:16px;overflow:hidden;border:1px solid var(--border);transition:box-shadow .2s}
+  .wk:hover{box-shadow:var(--shm)}
+  .wk-hd{display:flex;align-items:center;padding:18px 22px;cursor:pointer;user-select:none;gap:14px;transition:background .15s}
+  .wk-hd:hover{background:var(--surface2)}
+  .wk-badge{font-family:'Playfair Display',serif;font-size:13px;font-weight:700;background:var(--text);color:#fff;border-radius:8px;padding:4px 10px;flex-shrink:0;min-width:38px;text-align:center}
+  .wk-info{flex:1;min-width:0}
+  .wk-title{font-size:15px;font-weight:600;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .wk-dates{font-size:11px;color:var(--muted)}
+  .wk-prog{display:flex;align-items:center;gap:8px;flex-shrink:0}
+  .wk-track{width:80px;height:6px;background:var(--border);border-radius:100px;overflow:hidden}
+  .wk-fill{height:100%;border-radius:100px;background:var(--green);transition:width .5s cubic-bezier(.4,0,.2,1)}
+  .wk-pct{font-size:12px;font-weight:600;color:var(--muted);min-width:32px;text-align:right}
+  .wk-chk{font-size:16px;flex-shrink:0;min-width:20px}
+  .chevron{font-size:16px;color:var(--muted);transition:transform .3s;flex-shrink:0}
+  .wk.open .chevron{transform:rotate(180deg)}
+  .wk-body{display:none;border-top:1px solid var(--border)}
+  .wk.open .wk-body{display:block}
+
+  /* week accent colors by dominant unit */
+  .wk.u1a .wk-badge{background:var(--blue)}
+  .wk.u1b .wk-badge{background:var(--purple)}
+  .wk.u2a .wk-badge{background:var(--gold)}
+  .wk.u2b .wk-badge{background:#c46520}
+  .wk.u3a .wk-badge{background:var(--teal)}
+  .wk.u3b .wk-badge{background:#b03060}
+  .wk.rev .wk-badge{background:var(--accent)}
+  .wk.fin .wk-badge{background:#1a1612}
+
+  /* DAY ROW */
+  .dr{padding:16px 22px;border-bottom:1px solid var(--border)}
+  .dr:last-child{border-bottom:none}
+  .dr.today{background:#fffef5;border-left:3px solid var(--gold)}
+
+  /* day badge colors */
+  .dr.u1a{background:var(--surface2)} .dr.u1a .dbadge{background:var(--blue-s);color:var(--blue)}
+  .dr.u1b{background:var(--surface2)} .dr.u1b .dbadge{background:var(--purple-s);color:var(--purple)}
+  .dr.u2a{background:var(--surface2)} .dr.u2a .dbadge{background:var(--gold-s);color:var(--gold)}
+  .dr.u2b{background:var(--surface2)} .dr.u2b .dbadge{background:#fff0e5;color:#c46520}
+  .dr.u3a{background:var(--surface2)} .dr.u3a .dbadge{background:var(--teal-s);color:var(--teal)}
+  .dr.u3b{background:var(--surface2)} .dr.u3b .dbadge{background:#fce8f0;color:#b03060}
+  .dr.rev{background:#fdf5f3}        .dr.rev .dbadge{background:var(--accent-s);color:var(--accent)}
+  .dr.fin{background:#f5f3ee}        .dr.fin .dbadge{background:#1a1612;color:#fff}
+
+  .dr-hd{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
+  .dbadge{font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;padding:3px 10px;border-radius:20px;flex-shrink:0}
+  .dname{font-size:14px;font-weight:600}
+  .dtag{font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;flex-shrink:0;margin-left:auto}
+  .tg-topic {background:var(--blue-s);  color:var(--blue)}
+  .tg-review{background:var(--accent-s);color:var(--accent)}
+  .tg-packet{background:#e8f5e9;        color:#2e7d32}
+  .tg-frq   {background:var(--purple-s);color:var(--purple)}
+  .tg-final {background:var(--gold-s);  color:var(--gold)}
+  .tg-eve   {background:#1a1612;        color:#f4a58a}
+
+  .dtopic{font-size:12px;font-weight:600;color:var(--muted);margin-bottom:10px;line-height:1.4}
+
+  /* TASKS */
+  .tl{display:flex;flex-direction:column;gap:7px}
+  .ti{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;background:var(--surface);border-radius:var(--rs);border:1px solid var(--border);cursor:pointer;transition:all .18s}
+  .ti:hover{border-color:#ccc}
+  .ti.done{background:var(--green-s);border-color:#b8dfc0}
+  .tcb{width:18px;height:18px;border-radius:5px;border:2px solid var(--border);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;background:#fff;font-size:11px;font-weight:700;color:#fff;transition:all .18s}
+  .ti.done .tcb{background:var(--green);border-color:var(--green)}
+  .tt{font-size:13px;line-height:1.5;color:var(--text)}
+  .ti.done .tt{color:var(--muted);text-decoration:line-through;text-decoration-color:#a8c9af}
+
+  /* MODAL */
+  .mo{position:fixed;inset:0;background:rgba(26,22,18,.55);display:flex;align-items:center;justify-content:center;z-index:1000;backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:opacity .2s}
+  .mo.show{opacity:1;pointer-events:all}
+  .md{background:var(--surface);border-radius:var(--r);padding:32px;max-width:380px;width:90%;box-shadow:var(--shm);transform:translateY(16px);transition:transform .25s}
+  .mo.show .md{transform:translateY(0)}
+  .md h3{font-family:'Playfair Display',serif;font-size:20px;margin-bottom:10px}
+  .md p{font-size:14px;color:var(--muted);margin-bottom:24px;line-height:1.6}
+  .md-acts{display:flex;gap:10px;justify-content:flex-end}
+
+  .motiv{max-width:920px;margin:32px auto 0;padding:0 16px;text-align:center;color:var(--muted);font-size:13px;font-style:italic}
+  .fab{position:fixed;bottom:24px;right:24px;width:44px;height:44px;border-radius:50%;background:var(--text);color:#fff;border:none;font-size:18px;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;transition:all .2s;z-index:100}
+  .fab:hover{background:var(--accent);transform:translateY(-2px)}
+
+  @media(max-width:600px){.wk-track{width:50px}.dtag{display:none}.hero{padding:36px 16px 32px}}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="eyebrow">📐 Your Personalized Study System</div>
+  <h1>AP Precalculus Study Tracker<br><span>Road to May 12</span></h1>
+  <p class="hero-sub">Apr 20 → May 11 · Every day · 4-day final review block · Exam May 12 🎓</p>
+  <div class="cd-row" id="cdRow"></div>
+  <div class="gp-wrap">
+    <div class="gp-meta">
+      <span class="gp-label">Overall Progress</span>
+      <span class="gp-pct" id="gpPct">0%</span>
+    </div>
+    <div class="gp-track"><div class="gp-fill" id="gpFill" style="width:0%"></div></div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="toolbar">
+    <div class="t-title">Study Schedule — Apr 20 → May 11</div>
+    <div class="t-acts">
+      <button class="btn btn-g" onclick="expandAll()">↕ Expand All</button>
+      <button class="btn btn-g" onclick="collapseAll()">↕ Collapse All</button>
+      <button class="btn btn-d" onclick="showModal()">↺ Reset Progress</button>
+    </div>
+  </div>
+  <div class="legend" id="legend"></div>
+  <div id="planner"></div>
+</div>
+
+<p class="motiv">"It always seems impossible until it's done." — 22 days, every topic, 4-day review block. You've got this. 💪</p>
+<button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<div class="mo" id="modal">
+  <div class="md">
+    <h3>Reset All Progress?</h3>
+    <p>This will clear every checkbox and all saved data. This cannot be undone.</p>
+    <div class="md-acts">
+      <button class="btn btn-g" onclick="hideModal()">Cancel</button>
+      <button class="btn btn-d" onclick="resetAll()">Yes, Reset</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ╔══════════════════════════════════════════════════════════════════════╗
+//  AP PRECALCULUS STUDY PLANNER  —  Apr 20 → May 11  (every day)
+//  STRUCTURE:
+//   Apr 20–26  (7 days)  Units 1A & 1B  — all topics, reviews, FRQ + Packet
+//   Apr 27–May 3 (7 days) Units 2A & 2B — all topics, reviews, FRQ + Packet
+//   May  4–7   (4 days)  Unit 3A & 3B  — all topics, reviews, FRQ + Packet
+//   May  8–11  (4 days)  ★ FINAL REVIEW BLOCK ★
+//   May 12              EXAM DAY
+// ╚══════════════════════════════════════════════════════════════════════╝
+
+const EXAM = new Date(2026, 4, 12);
+
+// ── Legend metadata ───────────────────────────────────────────────────
+const UNITS = {
+  u1a:{ label:'Unit 1A – Polynomial Functions',    color:'#2d5fa6' },
+  u1b:{ label:'Unit 1B – Rational Functions',      color:'#6b4fa0' },
+  u2a:{ label:'Unit 2A – Exponential Functions',   color:'#c49a2e' },
+  u2b:{ label:'Unit 2B – Logarithmic Functions',   color:'#c46520' },
+  u3a:{ label:'Unit 3A – Sinusoidal & Trig',       color:'#2a7a74' },
+  u3b:{ label:'Unit 3B – Advanced Trig & Polar',   color:'#b03060' },
+  rev:{ label:'Reviews, FRQs & Packet Practice',   color:'#c8553d' },
+  fin:{ label:'★ Final Review Week',               color:'#1a1612' },
+};
+
+// ── Task helpers ──────────────────────────────────────────────────────
+const S  = t => ({i:'📖', t:'Study: '+t});
+const M  = t => ({i:'✏️',  t:'MCQ Practice: '+t+' (10–15 questions)'});
+const F  = t => ({i:'📝', t:'FRQ Practice: '+t});
+const FL = t => ({i:'🃏', t:'Key Formulas / Flashcards: '+t});
+const RV = t => ({i:'🔄', t:'Review Notes: '+t});
+const MX = t => ({i:'🎯', t:'Mixed MCQ: '+t});
+const PK = t => ({i:'📦', t:'Packet Practice: '+t});
+const CU = t => ({i:'🌐', t:'Cumulative Review: '+t});
+const WR = () =>({i:'✅', t:'Wrap-up: organize notes & flag weak spots'});
+const FT = t => ({i:'📋', t});
+const RS = t => ({i:'🧘', t});
+
+// ╔══════════════════════════════════════════════════════════════════════╗
+//  COMPLETE 22-DAY SCHEDULE
+//
+//  ─ WEEK 1 (Apr 20–26): Units 1A & 1B ─────────────────────────────────
+//  Apr 20 Sun  1A · 1.1 & 1.2
+//  Apr 21 Mon  1A · 1.3 & 1.4
+//  Apr 22 Tue  1A · 1.5A, 1.5B & 1.6  +  Unit 1A REVIEW
+//  Apr 23 Wed  1B · 1.7A, 1.7B, 1.8, 1.9 & 1.10
+//  Apr 24 Thu  1B · 1.11A, 1.11B, 1.12A & 1.12B
+//  Apr 25 Fri  1B · 1.13 & 1.14  +  Unit 1B REVIEW
+//  Apr 26 Sat  📦 FRQ Day + Unit 1 Packet (1A & 1B)
+//
+//  ─ WEEK 2 (Apr 27–May 3): Units 2A & 2B ─────────────────────────────
+//  Apr 27 Sun  2A · 2.1, 2.2 & 2.3
+//  Apr 28 Mon  2A · 2.4, 2.5A & 2.5B
+//  Apr 29 Tue  2A · 2.6, 2.7A, 2.7B & 2.8  +  Unit 2A REVIEW
+//  Apr 30 Wed  2B · 2.9, 2.10 & 2.11
+//  May  1 Thu  2B · 2.12, 2.13A & 2.13B
+//  May  2 Fri  2B · 2.14 & 2.15  +  Unit 2B REVIEW
+//  May  3 Sat  📦 FRQ Day + Unit 2 Packet (2A & 2B)
+//
+//  ─ DAYS 15–18 (May 4–7): Units 3A & 3B ──────────────────────────────
+//  May  4 Sun  3A · 3.1, 3.2A, 3.2B, 3.3A & 3.3B
+//  May  5 Mon  3A · 3.4, 3.5, 3.6A, 3.6B & 3.7  +  Unit 3A REVIEW
+//  May  6 Tue  3B · 3.8, 3.9, 3.10, 3.11, 3.12A, 3.12B, 3.13, 3.14A, 3.14B & 3.15  +  Unit 3B REVIEW
+//  May  7 Wed  📦 FRQ Day + Unit 3 Packet (3A & 3B)
+//
+//  ─ FINAL REVIEW BLOCK (May 8–11) ★ ─────────────────────────────────
+//  May  8 Thu  ★ FINAL REVIEW DAY 1 — Units 1A & 1B deep dive
+//  May  9 Fri  ★ FINAL REVIEW DAY 2 — Units 2A & 2B deep dive
+//  May 10 Sat  ★ FINAL REVIEW DAY 3 — Units 3A & 3B + Full Practice Exam
+//  May 11 Sun  ★ FINAL REVIEW DAY 4 — All-units mixed + Exam Eve prep
+// ╚══════════════════════════════════════════════════════════════════════╝
+
+const SCHED = [
+
+  // ════════════════════════════════════════════════════════════════
+  //  WEEK 1  —  Units 1A & 1B
+  // ════════════════════════════════════════════════════════════════
+
+  {date:new Date(2026,3,20), u:'u1a', type:'topic',
+   label:'Unit 1A · 1.1 Change in Tandem  &  1.2 Rates of Change',
+   tasks:[
+     S('1.1 Change in Tandem — how two quantities change together'),
+     S('1.2 Rates of Change — average rate of change over an interval'),
+     M('1.1 & 1.2 — change in tandem, average rate of change'),
+     FL('Rate of change vocabulary, notation, and interval formula'),
+   ]},
+
+  {date:new Date(2026,3,21), u:'u1a', type:'topic',
+   label:'Unit 1A · 1.3 Rates of Change in Linear & Quadratic  &  1.4 Polynomial Rates',
+   tasks:[
+     S('1.3 Rates of Change in Linear and Quadratic Functions'),
+     S('1.4 Polynomial Functions and Rates of Change'),
+     M('1.3 & 1.4 — linear, quadratic and polynomial rates'),
+     F('1.3–1.4 — compute and interpret rates of change (full solutions)'),
+     FL('Constant vs linear vs non-constant rates of change'),
+   ]},
+
+  {date:new Date(2026,3,22), u:'u1a', type:'review',
+   label:'Unit 1A · 1.5A Complex Zeros · 1.5B Even & Odd · 1.6 End Behavior  +  Unit 1A REVIEW',
+   tasks:[
+     S('1.5A Polynomial Functions and Complex Zeros'),
+     S('1.5B Even and Odd Polynomials'),
+     S('1.6 Polynomial Functions and End Behavior'),
+     M('1.5A, 1.5B & 1.6 — zeros, parity, end behavior'),
+     FL('Complex zero rules · Even/odd tests · End behavior decision chart'),
+     RV('Unit 1A full review: re-read all notes for 1.1–1.6'),
+     MX('Unit 1A mixed MCQ — 20 questions across all polynomial topics'),
+     F('Unit 1A FRQ — polynomial function analysis (show all work)'),
+     WR(),
+   ]},
+
+  {date:new Date(2026,3,23), u:'u1b', type:'topic',
+   label:'Unit 1B · 1.7A & 1.7B Rational End Behavior · 1.8 Zeros · 1.9 Vertical Asymptotes · 1.10 Holes',
+   tasks:[
+     S('1.7A Rational Functions and End Behavior'),
+     S('1.7B Rational Functions and End Behavior (continued)'),
+     S('1.8 Rational Functions and Zeros'),
+     S('1.9 Rational Functions and Vertical Asymptotes'),
+     S('1.10 Rational Functions and Holes'),
+     M('1.7–1.10 — rational end behavior, zeros, asymptotes, holes'),
+     F('1.7–1.10 FRQ — identify all features of a given rational function'),
+     FL('Horizontal asymptote rules · Zeros vs asymptotes vs holes decision chart'),
+   ]},
+
+  {date:new Date(2026,3,24), u:'u1b', type:'topic',
+   label:'Unit 1B · 1.11A Binomial Theorem · 1.11B Long Division & Slant Asymptotes · 1.12A & 1.12B Transformations',
+   tasks:[
+     S('1.11A Equivalent Expressions and Binomial Theorem'),
+     S('1.11B Polynomial Long Division and Slant Asymptotes'),
+     S('1.12A Translations of Functions'),
+     S('1.12B Dilations of Functions'),
+     M('1.11–1.12 — binomial theorem, long division, slant asymptotes, transformations'),
+     F('1.11B FRQ — perform long division and identify the slant asymptote'),
+     FL("Pascal's triangle · Transformation rules: h/k shifts, a/b scales"),
+   ]},
+
+  {date:new Date(2026,3,25), u:'u1b', type:'review',
+   label:'Unit 1B · 1.13 Model Selection · 1.14 Model Construction  +  Unit 1B REVIEW',
+   tasks:[
+     S('1.13 Function Model Selection and Assumption Articulation'),
+     S('1.14 Function Model Construction and Application'),
+     M('1.13–1.14 — model selection, construction and application'),
+     RV('Unit 1B full review: re-read all notes for 1.7–1.14'),
+     MX('Unit 1B mixed MCQ — 20 questions across all rational & transformation topics'),
+     F('Unit 1B FRQ — rational function complete analysis (asymptotes, holes, model)'),
+     WR(),
+   ]},
+
+  {date:new Date(2026,3,26), u:'rev', type:'packet',
+   label:'📦 FRQ Focus + Unit 1 Packet Practice  (Units 1A & 1B)',
+   tasks:[
+     F('Unit 1A FRQ set — 2 full FRQ problems, timed 20 min each'),
+     F('Unit 1B FRQ set — 2 full FRQ problems, timed 20 min each'),
+     PK('Unit 1 Packet — complete ALL assigned packet problems for Units 1A & 1B'),
+     MX('Unit 1 combined mixed MCQ — 25 questions across all Unit 1 topics'),
+     CU('Go back and redo every packet or MCQ problem you got wrong'),
+   ]},
+
+  // ════════════════════════════════════════════════════════════════
+  //  WEEK 2  —  Units 2A & 2B
+  // ════════════════════════════════════════════════════════════════
+
+  {date:new Date(2026,3,27), u:'u2a', type:'topic',
+   label:'Unit 2A · 2.1 Sequences · 2.2 Linear vs Exponential Change · 2.3 Exponential Functions',
+   tasks:[
+     S('2.1 Change in Arithmetic and Geometric Sequences'),
+     S('2.2 Change in Linear and Exponential Functions'),
+     S('2.3 Exponential Functions'),
+     M('2.1–2.3 — sequences, linear vs exponential growth'),
+     FL('Arithmetic & geometric sequence formulas · Exponential function properties'),
+   ]},
+
+  {date:new Date(2026,3,28), u:'u2a', type:'topic',
+   label:'Unit 2A · 2.4 Exp Manipulation · 2.5A & 2.5B Exponential Context & Modeling',
+   tasks:[
+     S('2.4 Exponential Function Manipulation'),
+     S('2.5A Exponential Function Context and Data Modeling'),
+     S('2.5B Exponential Function Context and Data Modeling (continued)'),
+     M('2.4–2.5 — manipulation, context, data modeling'),
+     F('2.5 FRQ — build and interpret an exponential model from data'),
+     FL('Exponential manipulation rules: base changes, growth/decay forms'),
+   ]},
+
+  {date:new Date(2026,3,29), u:'u2a', type:'review',
+   label:'Unit 2A · 2.6 Competing Models · 2.7A & 2.7B Composition · 2.8 Inverse Functions  +  Unit 2A REVIEW',
+   tasks:[
+     S('2.6 Competing Function Model Validation'),
+     S('2.7A Composition of Functions'),
+     S('2.7B Composition of Functions (continued)'),
+     S('2.8 Inverse Functions'),
+     M('2.6–2.8 — competing models, composition, inverses'),
+     F('Unit 2A FRQ — composition and inverse function problem (show all work)'),
+     RV('Unit 2A full review: re-read all notes for 2.1–2.8'),
+     MX('Unit 2A mixed MCQ — 20 questions across all exponential & composition topics'),
+     WR(),
+   ]},
+
+  {date:new Date(2026,3,30), u:'u2b', type:'topic',
+   label:'Unit 2B · 2.9 Log Expressions · 2.10 Inverses of Exponentials · 2.11 Log Functions',
+   tasks:[
+     S('2.9 Logarithmic Expressions'),
+     S('2.10 Inverses of Exponential Functions'),
+     S('2.11 Logarithmic Functions'),
+     M('2.9–2.11 — log expressions, inverses, log functions'),
+     FL('Log laws: product, quotient, power, change-of-base, ln vs log₁₀'),
+   ]},
+
+  {date:new Date(2026,4,1), u:'u2b', type:'topic',
+   label:'Unit 2B · 2.12 Log Manipulation · 2.13A & 2.13B Exp & Log Equations & Inequalities',
+   tasks:[
+     S('2.12 Logarithmic Function Manipulation'),
+     S('2.13A Exponential and Logarithmic Equations and Inequalities'),
+     S('2.13B Exponential and Logarithmic Equations and Inequalities (continued)'),
+     M('2.12–2.13 — log manipulation, equations and inequalities'),
+     F('2.13 FRQ — solve an exponential equation and a logarithmic inequality'),
+     FL('Solving exp/log equations step-by-step · When to use ln vs log'),
+   ]},
+
+  {date:new Date(2026,4,2), u:'u2b', type:'review',
+   label:'Unit 2B · 2.14 Log Context & Modeling · 2.15 Semi-log Plots  +  Unit 2B REVIEW',
+   tasks:[
+     S('2.14 Logarithmic Function Context and Data Modeling'),
+     S('2.15 Semi-log Plots'),
+     M('2.14–2.15 — log modeling and semi-log plots'),
+     F('Unit 2B FRQ — semi-log data interpretation + logarithmic modeling problem'),
+     RV('Unit 2B full review: re-read all notes for 2.9–2.15'),
+     MX('Unit 2B mixed MCQ — 20 questions across all logarithmic topics'),
+     WR(),
+   ]},
+
+  {date:new Date(2026,4,3), u:'rev', type:'packet',
+   label:'📦 FRQ Focus + Unit 2 Packet Practice  (Units 2A & 2B)',
+   tasks:[
+     F('Unit 2A FRQ set — 2 full FRQ problems, timed 20 min each'),
+     F('Unit 2B FRQ set — 2 full FRQ problems, timed 20 min each'),
+     PK('Unit 2 Packet — complete ALL assigned packet problems for Units 2A & 2B'),
+     MX('Unit 2 combined mixed MCQ — 25 questions across all Unit 2 topics'),
+     CU('Go back and redo every packet or MCQ problem you got wrong'),
+   ]},
+
+  // ════════════════════════════════════════════════════════════════
+  //  DAYS 15–18  —  Units 3A & 3B  (May 4–7, compact to free final block)
+  // ════════════════════════════════════════════════════════════════
+
+  {date:new Date(2026,4,4), u:'u3a', type:'topic',
+   label:'Unit 3A · 3.1 Periodic Phenomena · 3.2A Radians · 3.2B Sin/Cos/Tan · 3.3A & 3.3B Values',
+   tasks:[
+     S('3.1 Periodic Phenomena'),
+     S('3.2A Radians'),
+     S('3.2B Sine, Cosine, and Tangent'),
+     S('3.3A Sine and Cosine Function Values'),
+     S('3.3B Sine and Cosine Function Values (continued)'),
+     M('3.1–3.3 — periodic phenomena, radians, sin/cos/tan values'),
+     FL('Full unit circle — all angles in degrees AND radians, memorize today'),
+   ]},
+
+  {date:new Date(2026,4,5), u:'u3a', type:'review',
+   label:'Unit 3A · 3.4 Graphs · 3.5 Sinusoidal · 3.6A & 3.6B Transformations · 3.7 Modeling  +  Unit 3A REVIEW',
+   tasks:[
+     S('3.4 Sine and Cosine Function Graphs'),
+     S('3.5 Sinusoidal Functions'),
+     S('3.6A Sinusoidal Function Transformations'),
+     S('3.6B Sinusoidal Function Transformations (continued)'),
+     S('3.7 Sinusoidal Function Context and Data Modeling'),
+     M('3.4–3.7 — graphing, sinusoidal transformations and real-world modeling'),
+     F('Unit 3A FRQ — write a sinusoidal model from a real-world context'),
+     RV('Unit 3A full review: re-read all notes for 3.1–3.7'),
+     MX('Unit 3A mixed MCQ — 20 questions across all sinusoidal topics'),
+     WR(),
+   ]},
+
+  {date:new Date(2026,4,6), u:'u3b', type:'review',
+   label:'Unit 3B · 3.8–3.15 All Topics  +  Unit 3B REVIEW',
+   tasks:[
+     S('3.8 The Tangent Function'),
+     S('3.9 Inverse Trigonometric Functions'),
+     S('3.10 Trigonometric Equations and Inequalities'),
+     S('3.11 The Secant, Cosecant, and Cotangent Functions'),
+     S('3.12A Equivalent Representations of Trigonometric Functions'),
+     S('3.12B Equivalent Representations of Trigonometric Functions (continued)'),
+     S('3.13 Trigonometry and Polar Coordinates'),
+     S('3.14A Polar Function Graphs'),
+     S('3.14B Polar Function Graphs (continued)'),
+     S('3.15 Rates of Change in Polar Functions'),
+     M('3.8–3.15 — tangent, inverse trig, equations, reciprocal functions, polar'),
+     F('Unit 3B FRQ — polar graph analysis + trig equations + inverse trig'),
+     FL('Reciprocal identities · Inverse trig domains/ranges · Polar coordinate rules'),
+     RV('Unit 3B full review: re-read all notes for 3.8–3.15'),
+     MX('Unit 3B mixed MCQ — 20 questions across all advanced trig & polar topics'),
+     WR(),
+   ]},
+
+  {date:new Date(2026,4,7), u:'rev', type:'packet',
+   label:'📦 FRQ Focus + Unit 3 Packet Practice  (Units 3A & 3B)',
+   tasks:[
+     F('Unit 3A FRQ set — 2 full FRQ problems, timed 20 min each'),
+     F('Unit 3B FRQ set — 2 full FRQ problems, timed 20 min each'),
+     PK('Unit 3 Packet — complete ALL assigned packet problems for Units 3A & 3B'),
+     MX('Unit 3 combined mixed MCQ — 25 questions across all Unit 3 topics'),
+     CU('Go back and redo every packet or MCQ problem you got wrong'),
+   ]},
+
+  // ════════════════════════════════════════════════════════════════
+  //  ★ FINAL REVIEW BLOCK  —  May 8–11  (4 full days)
+  // ════════════════════════════════════════════════════════════════
+
+  {date:new Date(2026,4,8), u:'fin', type:'final',
+   label:'★ FINAL REVIEW DAY 1 — Units 1A & 1B: Polynomial & Rational Functions',
+   tasks:[
+     CU('1.1–1.4: rates of change, polynomial rates — redo any flagged problems'),
+     CU('1.5–1.6: complex zeros, even/odd, end behavior — verify you can do these fast'),
+     CU('1.7–1.10: rational end behavior, zeros, vertical asymptotes, holes'),
+     CU('1.11–1.14: binomial theorem, long division, slant asymptotes, transformations, modeling'),
+     MX('Unit 1 all-topics mixed MCQ — 30 questions (timed, 45 min)'),
+     F('Unit 1 mixed FRQ — 1 polynomial FRQ + 1 rational function FRQ (timed 20 min each)'),
+     FL('Unit 1 personal formula sheet — write every key formula from memory'),
+   ]},
+
+  {date:new Date(2026,4,9), u:'fin', type:'final',
+   label:'★ FINAL REVIEW DAY 2 — Units 2A & 2B: Exponential & Logarithmic Functions',
+   tasks:[
+     CU('2.1–2.5: sequences, linear vs exponential change, exponential manipulation & modeling'),
+     CU('2.6–2.8: competing models, composition of functions, inverse functions'),
+     CU('2.9–2.12: log expressions, inverses of exponentials, log functions, log manipulation'),
+     CU('2.13–2.15: exp/log equations & inequalities, log modeling, semi-log plots'),
+     MX('Unit 2 all-topics mixed MCQ — 30 questions (timed, 45 min)'),
+     F('Unit 2 mixed FRQ — 1 exponential modeling FRQ + 1 logarithmic equation FRQ (timed 20 min each)'),
+     FL('Unit 2 personal formula sheet — write every key formula from memory'),
+   ]},
+
+  {date:new Date(2026,4,10), u:'fin', type:'final',
+   label:'★ FINAL REVIEW DAY 3 — Units 3A & 3B + Full Simulated Practice Exam',
+   tasks:[
+     CU('3.1–3.7: periodic phenomena, unit circle, sin/cos/tan values, sinusoidal graphs & modeling'),
+     CU('3.8–3.15: tangent, inverse trig, trig equations, sec/csc/cot, polar coordinates & graphs'),
+     FL('Unit 3 personal formula sheet — unit circle, trig identities, polar rules from memory'),
+     FT('📋 FULL PRACTICE EXAM — Part A: 28 MCQ No Calculator (80 min, fully timed)'),
+     FT('📋 FULL PRACTICE EXAM — Part B: 12 MCQ Calculator OK (50 min, fully timed)'),
+     FT('📋 FULL PRACTICE EXAM — FRQ Section: 4 questions (60 min, fully timed)'),
+     RS('Score everything immediately. Circle every missed question and tag which unit it belongs to.'),
+   ]},
+
+  {date:new Date(2026,4,11), u:'fin', type:'eve',
+   label:'★ FINAL REVIEW DAY 4 — All-Units Wrap-up + Exam Eve Prep',
+   tasks:[
+     CU('Targeted review: go back to the exact topics you missed most on the practice exam'),
+     MX('All-units final mixed MCQ — 25 questions, no time limit, review every wrong answer'),
+     F('2 mixed FRQs: pick one from your weakest unit and one from your second weakest (20 min each)'),
+     FL('Final formula skim: read through your Unit 1, 2, and 3 formula sheets one last time'),
+     RS('Prep for tomorrow: charge calculator, pack pencils, ID, and a snack — do this tonight'),
+     RS('Eat a proper meal, wind down, and get a full night of sleep. You have done the work. 💪'),
+   ]},
+
+]; // end SCHED (22 days, Apr 20–May 11)
+
+// ══════════════════════════════════════════════════════════════════════
+//  WEEK GROUPING  —  7-day windows: W1=Apr20–26, W2=Apr27–May3,
+//                    W3=May4–7 (4-day units block), W4=May8–11 (final)
+// ══════════════════════════════════════════════════════════════════════
+// Manual grouping so W3 and W4 are not both 7 days
+const WEEK_DEFS = [
+  { title:'📗 Week 1 — Units 1A & 1B · Polynomial & Rational Functions', days:7 },
+  { title:'📙 Week 2 — Units 2A & 2B · Exponential & Logarithmic Functions', days:7 },
+  { title:'📕 Week 3 — Units 3A & 3B · Trigonometric & Polar Functions', days:4 },
+  { title:'🏁 Final Review Block (May 8–11) · 4 Days to the Exam', days:4 },
+];
+
+function buildWeeks(sched, defs) {
+  const groups = [];
+  let idx = 0;
+  defs.forEach(def => {
+    const slice = sched.slice(idx, idx + def.days);
+    if (slice.length) groups.push({ title: def.title, days: slice });
+    idx += def.days;
+  });
+  return groups;
+}
+const WEEKS = buildWeeks(SCHED, WEEK_DEFS);
+
+// ══════════════════════════════════════════════════════════════════════
+//  STORAGE
+// ══════════════════════════════════════════════════════════════════════
+const KEY = 'apPC_v5';
+const gs = () => { try { return JSON.parse(localStorage.getItem(KEY))||{}; } catch { return {}; } };
+const ss = d => localStorage.setItem(KEY, JSON.stringify(d));
+const tid = (wi,di,ti) => `${wi}.${di}.${ti}`;
+
+// ══════════════════════════════════════════════════════════════════════
+//  RENDER
+// ══════════════════════════════════════════════════════════════════════
+const TYPE_TAG = {
+  topic: {l:'Topic Study',       c:'tg-topic'},
+  review:{l:'Topic + Review',    c:'tg-review'},
+  packet:{l:'📦 Packet + FRQ', c:'tg-packet'},
+  final: {l:'★ Final Review',   c:'tg-final'},
+  eve:   {l:'🎓 Exam Eve',      c:'tg-eve'},
+};
+
+// dominant unit → css class
+const UCLS = {u1a:'u1a',u1b:'u1b',u2a:'u2a',u2b:'u2b',u3a:'u3a',u3b:'u3b',rev:'rev',fin:'fin'};
+
+function renderLegend() {
+  const el = document.getElementById('legend');
+  Object.entries(UNITS).forEach(([,v]) => {
+    const d = document.createElement('div');
+    d.className = 'leg-i';
+    d.innerHTML = `<div class="leg-d" style="background:${v.color}"></div>${v.label}`;
+    el.appendChild(d);
+  });
+}
+
+function renderPlanner() {
+  const saved = gs();
+  const el = document.getElementById('planner');
+  el.innerHTML = '';
+  const todayStr = new Date().toDateString();
+
+  WEEKS.forEach((wk, wi) => {
+    // progress
+    let tot=0, done=0;
+    wk.days.forEach((d,di) => d.tasks.forEach((_,ti) => { tot++; if(saved[tid(wi,di,ti)]) done++; }));
+    const pct = tot ? Math.round(done/tot*100) : 0;
+
+    // dominant unit class for week badge color
+    const uc={};
+    wk.days.forEach(d => { uc[d.u]=(uc[d.u]||0)+1; });
+    const du = Object.entries(uc).sort((a,b)=>b[1]-a[1])[0][0];
+    const wcls = UCLS[du]||'rev';
+
+    const wStart = wk.days[0].date.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+    const wEnd   = wk.days[wk.days.length-1].date.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+
+    const card = document.createElement('div');
+    card.className = `wk ${wcls}`;
+    card.dataset.wi = wi;
+    card.innerHTML = `
+      <div class="wk-hd" onclick="toggleWk(${wi})">
+        <div class="wk-badge">W${wi+1}</div>
+        <div class="wk-info">
+          <div class="wk-title">${wk.title}</div>
+          <div class="wk-dates">${wStart} – ${wEnd} · ${wk.days.length} days</div>
+        </div>
+        <div class="wk-prog">
+          <div class="wk-track"><div class="wk-fill" style="width:${pct}%" id="wf${wi}"></div></div>
+          <span class="wk-pct" id="wp${wi}">${pct}%</span>
+          <span class="wk-chk" id="wc${wi}">${pct===100?'✅':''}</span>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="wk-body" id="wb${wi}"></div>`;
+    el.appendChild(card);
+
+    const body = card.querySelector(`#wb${wi}`);
+
+    wk.days.forEach((day, di) => {
+      const isToday = day.date.toDateString() === todayStr;
+      const dcls  = UCLS[day.u]||'rev';
+      const tag   = TYPE_TAG[day.type]||{l:day.type,c:'tg-topic'};
+      const dname = day.date.toLocaleDateString('en-US',{weekday:'long',month:'short',day:'numeric'});
+
+      const row = document.createElement('div');
+      row.className = `dr ${dcls}${isToday?' today':''}`;
+      row.innerHTML = `
+        <div class="dr-hd">
+          <span class="dbadge">${isToday?'📍 Today':day.date.toLocaleDateString('en-US',{weekday:'short'})}</span>
+          <span class="dname">${isToday?`<strong>${dname}</strong>`:dname}</span>
+          <span class="dtag ${tag.c}">${tag.l}</span>
+        </div>
+        <div class="dtopic">${day.label}</div>
+        <div class="tl" id="tl${wi}_${di}"></div>`;
+      body.appendChild(row);
+
+      const tl = row.querySelector(`#tl${wi}_${di}`);
+      day.tasks.forEach((task, ti) => {
+        const id = tid(wi,di,ti);
+        const done = !!saved[id];
+        const item = document.createElement('div');
+        item.className = `ti${done?' done':''}`;
+        item.onclick = () => toggle(id, item, wi);
+        item.innerHTML = `<div class="tcb">${done?'✓':''}</div><span class="tt">${task.i} ${task.t}</span>`;
+        tl.appendChild(item);
+      });
+    });
+
+    // auto-open current week
+    if (wk.days.some(d => d.date.toDateString() === todayStr)) card.classList.add('open');
+  });
+
+  updateGlobal();
+}
+
+function toggle(id, item, wi) {
+  const saved = gs();
+  const nd = !saved[id];
+  if (nd) { saved[id]=true; item.classList.add('done'); item.querySelector('.tcb').textContent='✓'; }
+  else    { delete saved[id]; item.classList.remove('done'); item.querySelector('.tcb').textContent=''; }
+  ss(saved);
+  updateWk(wi);
+  updateGlobal();
+}
+
+function updateWk(wi) {
+  const saved = gs();
+  let tot=0,done=0;
+  WEEKS[wi].days.forEach((d,di) => d.tasks.forEach((_,ti) => { tot++; if(saved[tid(wi,di,ti)]) done++; }));
+  const pct = tot ? Math.round(done/tot*100):0;
+  const pf=document.getElementById('wf'+wi), pp=document.getElementById('wp'+wi), pc=document.getElementById('wc'+wi);
+  if(pf) pf.style.width=pct+'%';
+  if(pp) pp.textContent=pct+'%';
+  if(pc) pc.textContent=pct===100?'✅':'';
+}
+
+function updateGlobal() {
+  const saved = gs();
+  let tot=0,done=0;
+  WEEKS.forEach((wk,wi) => wk.days.forEach((d,di) => d.tasks.forEach((_,ti) => { tot++; if(saved[tid(wi,di,ti)]) done++; })));
+  const pct = tot ? Math.round(done/tot*100):0;
+  document.getElementById('gpPct').textContent=pct+'%';
+  document.getElementById('gpFill').style.width=pct+'%';
+}
+
+function toggleWk(wi) { const c=document.querySelector(`.wk[data-wi="${wi}"]`); if(c) c.classList.toggle('open'); }
+function expandAll()   { document.querySelectorAll('.wk').forEach(c=>c.classList.add('open')); }
+function collapseAll() { document.querySelectorAll('.wk').forEach(c=>c.classList.remove('open')); }
+
+// Countdown
+function tick() {
+  const diff = EXAM - new Date();
+  if (diff<=0) { document.getElementById('cdRow').innerHTML='<div class="cd-chip"><span class="cd-num">🎓</span><span class="cd-lbl">Exam Day!</span></div>'; return; }
+  const d=Math.floor(diff/86400000), h=Math.floor((diff%86400000)/3600000),
+        mn=Math.floor((diff%3600000)/60000), s=Math.floor((diff%60000)/1000);
+  document.getElementById('cdRow').innerHTML=`
+    <div class="cd-chip"><span class="cd-num">${d}</span><span class="cd-lbl">Days</span></div>
+    <div class="cd-chip"><span class="cd-num">${String(h).padStart(2,'0')}</span><span class="cd-lbl">Hours</span></div>
+    <div class="cd-chip"><span class="cd-num">${String(mn).padStart(2,'0')}</span><span class="cd-lbl">Mins</span></div>
+    <div class="cd-chip"><span class="cd-num">${String(s).padStart(2,'0')}</span><span class="cd-lbl">Secs</span></div>`;
+}
+
+// Modal
+function showModal() { document.getElementById('modal').classList.add('show'); }
+function hideModal() { document.getElementById('modal').classList.remove('show'); }
+function resetAll()  { localStorage.removeItem(KEY); hideModal(); renderPlanner(); }
+document.getElementById('modal').addEventListener('click', e => { if(e.target.id==='modal') hideModal(); });
+
+// Init
+renderLegend();
+renderPlanner();
+tick();
+setInterval(tick, 1000);
+</script>
+</body>
+</html>
